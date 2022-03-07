@@ -46,7 +46,7 @@ const Home = () => {
 
     useEffect(() => {
         dispatch(getUsers(auth.loggedInUser.uid));
-    }, []);
+    }, [auth.loggedInUser.uid]);
 
     const initChat = (user) => {
         setChatStarted(true);
