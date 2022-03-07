@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import "./App.css";
+import Home from "./components/HomePage/Home";
+import Login from "./components/LoginPage/Login";
+import Register from "./components/RegisterPage/Register";
+import { useDispatch, useSelector } from "react-redux";
+import { isLoggedInUser } from "./redux/actions/actionsAuth";
+import { useEffect } from "react";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const dispatch = useDispatch();
+    const auth = useSelector((state) => state.auth);
+
+    useEffect(() => {
+        if (!auth.authenticate) {
+            dispatch(isLoggedInUser());
+        }
+    }, []);
+
+    return (
+        <div className="App">
+            <BrowserRouter>
+                <Routes>
+                    {localStorage.getItem("user") ? (
+                        <Route path="/" element={<Home />} />
+                    ) : (
+                        <Route path="/" element={<Navigate replace to="/login" />} />
+                    )}
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/signup" element={<Register />} />
+                </Routes>
+            </BrowserRouter>
+        </div>
+    );
 }
 
 export default App;
