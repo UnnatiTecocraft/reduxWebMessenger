@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Layout from "../Layout/Layout";
 import Card from "../Card/Card";
 import "./styleLogin.css";
 import { useDispatch } from "react-redux";
-import { isLoggedInUser, signIn } from "../../redux/actions/actionsAuth";
+import { signIn } from "../../redux/actions/actionsAuth";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
